@@ -5,9 +5,9 @@ rcon_client
 
 # Download
 
-Windows: https://github.com/vibhavp/rcon_client/releases/download/1.0/rcon_client_x86.exe
+[Windows](https://github.com/vibhavp/rcon_client/releases/download/1.0/rcon_client_x86.exe)
 
-Linux: https://github.com/vibhavp/rcon_client/releases/download/1.0/rcon_client_linux
+[Linux](https://github.com/vibhavp/rcon_client/releases/download/1.0/rcon_client_linux)
   
 # Usage
 
