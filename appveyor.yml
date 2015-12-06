@@ -1,0 +1,12 @@
+environment:
+  GOPATH: c:\gopath
+
+install:
+  - echo %PATH%
+  - echo %GOPATH%
+  - go version
+  - go env
+  - go get -v -t ./...
+
+built_script:
+  - go build -v -o rcon_client
