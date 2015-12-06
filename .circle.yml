@@ -1,0 +1,5 @@
+deployment:
+  master:
+    branch: master
+    commands:
+    - go build -o $CIRCLE_ARTIFACTS/rcon_client -v
