@@ -12,3 +12,6 @@ install:
 
 build_script:
   - go build -v -o rcon_client
+
+artifacts:
+  - path: c:\gopath\src\github.com\vibhavp\rcon_client\rcon_client
