@@ -37,7 +37,7 @@ func main() {
 		query, _ := reader.ReadString('\n')
 		reply, err := conn.Query(query)
 		if err != nil {
-			if err == rcon.UnknownCommandError {
+			if err == rcon.ErrUnknownCommand {
 				log.Println("Unknown Command")
 				continue
 			}
