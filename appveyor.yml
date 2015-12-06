@@ -8,5 +8,5 @@ install:
   - go env
   - go get -v -t ./...
 
-built_script:
+build_script:
   - go build -v -o rcon_client
