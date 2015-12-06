@@ -15,4 +15,6 @@ build_script:
   - GOARCH=amd64 go build -v -o rcon_client_x86_64.exe
 
 artifacts:
-  - path: rcon_client
+  - path: rcon_client_x86.exe
+
+  - path: rcon_client_x86_64.exe
