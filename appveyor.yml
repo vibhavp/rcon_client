@@ -11,7 +11,8 @@ install:
   - go get -v -t ./...
 
 build_script:
-  - go build -v -o rcon_client
+  - GOARCH=386 go build -v -o rcon_client_x86.exe
+  - GOARCH=amd64 go build -v -o rcon_client_x86_64.exe
 
 artifacts:
   - path: rcon_client
