@@ -6,10 +6,28 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	rcon "github.com/TF2Stadium/TF2RconWrapper"
+	speakeasy "github.com/bgentry/speakeasy"
 	isatty "github.com/mattn/go-isatty"
 )
+
+func stdinIsatty() bool {
+	return isatty.IsTerminal(os.Stdin.Fd())
+}
+
+func readParameter(reader *bufio.Reader, prompt string) string {
+	var str string
+
+	if stdinIsatty() {
+		str, _ = speakeasy.Ask(prompt)
+	} else {
+		str, _ = reader.ReadString('\n')
+	}
+
+	return strings.TrimSpace(str)
+}
 
 func main() {
 	var addr, pwd string
@@ -19,20 +37,21 @@ func main() {
 
 	flag.Parse()
 
+	reader := bufio.NewReader(os.Stdin)
+	isCLI := stdinIsatty()
+
 	if addr == "" {
-		log.Fatal("Address not specified")
+		addr = readParameter(reader, "Please enter server address: ")
 	}
+
 	if pwd == "" {
-		log.Fatal("RCON password not specified")
+		pwd = readParameter(reader, "Please enter RCON password: ")
 	}
 
 	conn, err := rcon.NewTF2RconConnection(addr, pwd)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-
-	reader := bufio.NewReader(os.Stdin)
-	isCLI := isatty.IsTerminal(os.Stdin.Fd())
 
 	for {
 		if isCLI {
