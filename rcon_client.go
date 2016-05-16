@@ -8,6 +8,7 @@ import (
 	"os"
 
 	rcon "github.com/TF2Stadium/TF2RconWrapper"
+	isatty "github.com/mattn/go-isatty"
 )
 
 func main() {
@@ -31,10 +32,18 @@ func main() {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
+	isCLI := isatty.IsTerminal(os.Stdin.Fd())
 
 	for {
-		fmt.Print("RCON> ")
-		query, _ := reader.ReadString('\n')
+		if isCLI {
+			fmt.Print("RCON> ")
+		}
+
+		query, readErr := reader.ReadString('\n')
+		if readErr != nil {
+			break
+		}
+
 		reply, err := conn.Query(query)
 		if err != nil {
 			if err == rcon.ErrUnknownCommand {
