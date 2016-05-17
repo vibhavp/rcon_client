@@ -17,11 +17,16 @@ func stdinIsatty() bool {
 	return isatty.IsTerminal(os.Stdin.Fd())
 }
 
-func readParameter(reader *bufio.Reader, prompt string) string {
+func readParameter(reader *bufio.Reader, prompt string, private bool) string {
 	var str string
 
 	if stdinIsatty() {
-		str, _ = speakeasy.Ask(prompt)
+		if private {
+			str, _ = speakeasy.Ask(prompt)
+		} else {
+			fmt.Print(prompt)
+			str, _ = reader.ReadString('\n')
+		}
 	} else {
 		str, _ = reader.ReadString('\n')
 	}
@@ -41,11 +46,11 @@ func main() {
 	isCLI := stdinIsatty()
 
 	if addr == "" {
-		addr = readParameter(reader, "Please enter server address: ")
+		addr = readParameter(reader, "Please enter server address: ", false)
 	}
 
 	if pwd == "" {
-		pwd = readParameter(reader, "Please enter RCON password: ")
+		pwd = readParameter(reader, "Please enter RCON password: ", true)
 	}
 
 	conn, err := rcon.NewTF2RconConnection(addr, pwd)
